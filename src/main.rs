@@ -363,7 +363,8 @@ fn auto_install_args(opts: &InstallOptions) -> String {
     };
     let fetcher = match opts.fetcher {
         Fetcher::Winget => "winget",
-        _ => "direct",
+        Fetcher::Direct => "direct",
+        _ => "mirror",
     };
     let mut s = format!(
         "--auto-install --mode {} --path \"{}\" --keep {} --fetcher {}",
@@ -1302,16 +1303,18 @@ fn int_to_install_mode(i: i32) -> InstallMode {
 
 fn fetcher_to_int(f: Fetcher) -> i32 {
     match f {
-        Fetcher::Direct => 0,
-        Fetcher::Winget => 1,
+        Fetcher::Mirror => 0,
+        Fetcher::Direct => 1,
+        Fetcher::Winget => 2,
         Fetcher::LocalFile => 0, // not representable in the combobox; fall back
     }
 }
 
 fn int_to_fetcher(i: i32) -> Fetcher {
     match i {
-        1 => Fetcher::Winget,
-        _ => Fetcher::Direct,
+        1 => Fetcher::Direct,
+        2 => Fetcher::Winget,
+        _ => Fetcher::Mirror,
     }
 }
 

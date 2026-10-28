@@ -1,6 +1,6 @@
 [package]
 name = "codex-updater"
-version = "0.1.4"
+version = "0.1.5"
 edition = "2021"
 rust-version = "1.80"
 description = "Unofficial installer/updater for the Codex Windows app"
@@ -45,8 +45,8 @@ windows = { version = "0.58", features = [
 
 [build-dependencies]
 slint-build = "1.8"
-
-[target.'cfg(windows)'.build-dependencies]
+# Not under `cfg(windows)`: build-dependency cfgs match the host, and the
+# resource still has to be embedded when cross-compiling from Linux.
 winresource = "0.1"
 
 [profile.release]

@@ -1,0 +1,16 @@
+# Cross-compile codex-launcher.exe (x86_64-pc-windows-msvc) from Linux with
+# cargo-xwin. Used by cross-build.sh, which copies /out out of the image.
+FROM rust:1.99.1-slim-bookworm
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends clang lld llvm ca-certificates \
+ && rm -rf /var/lib/apt/lists/*
+RUN rustup target add x86_64-pc-windows-msvc \
+ && cargo install --locked cargo-xwin
+ENV XWIN_ACCEPT_LICENSE=1 RC_PATH=llvm-rc
+WORKDIR /src
+COPY . .
+RUN cargo xwin build --locked --release --target x86_64-pc-windows-msvc \
+ && mkdir /out \
+ && cp target/x86_64-pc-windows-msvc/release/codex-launcher.exe /out/ \
+ && (cd /out && sha256sum codex-launcher.exe > codex-launcher.exe.sha256) \
+ && rm -rf target

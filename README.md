@@ -1,5 +1,19 @@
 # codex-windows-updater
 
+> **This is a fork** of [vaportail/codex-windows-updater](https://github.com/vaportail/codex-windows-updater),
+> used by [codex-oneclick](https://github.com/awaragml00029-debug/codex-oneclick). Changes:
+>
+> - New default fetcher **Mirror**: the official MSIX re-hosted byte-for-byte by
+>   [Wangnov/codex-app-mirror](https://github.com/Wangnov/codex-app-mirror), for networks where the
+>   Store endpoints are blocked (mainland China: the `displaycatalog.mp.microsoft.com` TLS handshake
+>   is cut). Sources, in order: the mirror's CDN (`codexapp.agentsmirror.com`), its GitHub release,
+>   then three public GitHub proxies. The file is checked against the mirror's `SHA256SUMS`, and the
+>   MSIX signature is still verified before extraction. Direct and Winget remain as fallbacks, and
+>   update checks fall back to the mirror too.
+> - The launcher's self-update points at this fork's releases.
+> - `build.rs` embeds `app.manifest` when cross-compiling; `cross-build.sh` builds the exe in Docker
+>   from Linux (cargo-xwin).
+
 ---
 
 # NEW NOTICE : Newest Codex ChatGPT.exe for some reason tries to read package identity - ~which fails cause we don't use Microsoft Store.~ - we rename the side-car from .node to .broken to prevent that

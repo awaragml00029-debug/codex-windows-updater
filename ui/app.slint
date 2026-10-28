@@ -93,7 +93,7 @@ export component AppWindow inherits Window {
     in-out property <bool> register-uninstall: true;
     in-out property <bool> use-current-junction: true;
     in-out property <int> keep-versions: 2;
-    in-out property <int> fetcher: 0; // 0=direct 1=winget
+    in-out property <int> fetcher: 0; // 0=mirror 1=direct 2=winget
 
     // Progress / status (Rust writes, UI reads).
     in property <string> progress-phase: "";
@@ -291,13 +291,13 @@ export component AppWindow inherits Window {
                     spacing: 8px;
                     Text { text: "Fetcher:"; color: #cdd6f4; vertical-alignment: center; }
                     ComboBox {
-                        model: ["Direct  (recommended)", "Winget  (may require Entra ID)"];
+                        model: ["Mirror  (recommended)", "Direct  (Microsoft Store)", "Winget  (may require Entra ID)"];
                         current-index <=> root.fetcher;
                     }
                 }
 
                 Text {
-                    text: "Direct downloads the MSIX from Microsoft's delivery CDN via the Store's own protocol. Winget shells out to winget.exe and currently requires a Microsoft Entra work/school account for Store packages.";
+                    text: "Mirror downloads the official MSIX from codex-app-mirror (works where the Store is blocked) and checks its SHA-256. Direct downloads it from Microsoft's delivery CDN via the Store's own protocol. Winget shells out to winget.exe and currently requires a Microsoft Entra work/school account for Store packages.";
                     color: #6c7086;
                     font-size: 11px;
                     wrap: word-wrap;

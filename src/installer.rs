@@ -278,7 +278,7 @@ fn run_inner(opts: &InstallOptions, on_msg: &dyn Fn(InstallMsg)) -> Result<Strin
         skipped_version: None,
         keep_versions: opts.keep_versions.max(1),
         fetcher: match opts.fetcher {
-            Fetcher::LocalFile => Fetcher::Direct, // don't persist LocalFile
+            Fetcher::LocalFile => Fetcher::Mirror, // don't persist LocalFile
             f => f,
         },
         use_current_junction: opts.use_current_junction,

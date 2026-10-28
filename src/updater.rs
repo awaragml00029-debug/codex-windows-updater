@@ -21,9 +21,11 @@ use std::time::{SystemTime, UNIX_EPOCH};
 
 /// Owner/repo for the launcher's own GitHub releases. Tweak here if the
 /// project ever moves.
-pub const LAUNCHER_REPO: &str = "vaportail/codex-windows-updater";
+/// This fork's own releases, not upstream's: an upstream build would drop the
+/// mirror fetcher.
+pub const LAUNCHER_REPO: &str = "awaragml00029-debug/codex-windows-updater";
 pub const LAUNCHER_LATEST_API: &str =
-    "https://api.github.com/repos/vaportail/codex-windows-updater/releases/latest";
+    "https://api.github.com/repos/awaragml00029-debug/codex-windows-updater/releases/latest";
 
 #[derive(Debug, Clone)]
 pub enum UpdateDecision {
